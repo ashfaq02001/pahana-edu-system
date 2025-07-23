@@ -9,7 +9,7 @@ import com.assignment.model.Item;
 public class ItemDAO {
 
 	public void addItem(Item item) {
-		String query = "INSERT INTO items (item_name, description, price, stock_quantity)";
+		String query = "INSERT INTO items (item_name, description, price, stock_quantity) VALUES (?, ?, ?,?)";
 		
 		try {
 			Connection conn = DBConnectionFactory.getConnection();
@@ -18,6 +18,7 @@ public class ItemDAO {
 			statement.setString(2, item.getDescription());
 			statement.setDouble(3, item.getPrice());
 			statement.setInt(4, item.getStockQuantity());
+			statement.executeUpdate();
 		}
 		catch (SQLException e){
 			e.printStackTrace();

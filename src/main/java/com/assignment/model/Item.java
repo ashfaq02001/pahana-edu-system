@@ -15,6 +15,10 @@ public class Item {
 		this.stockQuantity = stockQuantity;
 	}
 
+	public Item() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getItemName() {
 		return itemName;
 	}

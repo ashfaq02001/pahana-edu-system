@@ -4,4 +4,14 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>ItemController</servlet-name>
+  	<display-name>ItemController</display-name>
+  	<description></description>
+  	<servlet-class>com.assignment.controller.ItemController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ItemController</servlet-name>
+  	<url-pattern>/ItemController</url-pattern>
+  </servlet-mapping>
 </web-app>
