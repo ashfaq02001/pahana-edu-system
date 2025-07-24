@@ -1,5 +1,8 @@
 package com.assignment.service;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import com.assignment.dao.ItemDAO;
 import com.assignment.model.Item;
 
@@ -26,6 +29,10 @@ public class ItemService {
 	
 	public void addItem (Item item) {
 		itemDAO.addItem(item);
+	}
+	
+	public List<Item> ViewItems() throws SQLException {
+		return itemDAO.ViewItems();
 	}
 	
 	

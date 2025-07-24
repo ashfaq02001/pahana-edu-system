@@ -2,13 +2,15 @@ package com.assignment.model;
 
 public class Item {
 
+	private int item_Id;
 	private String itemName;
 	private String description;
 	private double price;
 	private int stockQuantity;
 	
-	public Item(String itemName, String description, double price, int stockQuantity) {
+	public Item(int item_Id, String itemName, String description, double price, int stockQuantity) {
 		super();
+		this.setItem_Id((item_Id));
 		this.itemName = itemName;
 		this.description = description;
 		this.price = price;
@@ -50,6 +52,21 @@ public class Item {
 	public void setStockQuantity(int stockQuantity) {
 		this.stockQuantity = stockQuantity;
 	}
+
+	public static void add(Item item) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public int getItem_Id() {
+		return item_Id;
+	}
+
+	public void setItem_Id(int item_Id) {
+		this.item_Id = item_Id;
+	}
+
+	
 }
 
 
