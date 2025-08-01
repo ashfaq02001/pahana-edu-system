@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.assignment.dao.ItemDAO;
-import com.assignment.model.Item;
+import com.assignment.model.Item;  
 
 
 public class ItemService {
@@ -29,12 +29,28 @@ public class ItemService {
 	
 	public void addItem (Item item) {
 		itemDAO.addItem(item);
+		
 	}
 	
 	public List<Item> ViewItems() throws SQLException {
 		return itemDAO.ViewItems();
 	}
 	
+	public Item getItemById(String itemId) throws SQLException {
+		return itemDAO.getItemById(itemId);
+	}
+	
+	public boolean updateItem(Item item) {
+		return itemDAO.updateItem(item);
+	}
+	
+	public boolean deleteItem(String itemId) {
+		return itemDAO.deleteItem(itemId);
+	}
+	
+	
+	
+
 	
 	
 	

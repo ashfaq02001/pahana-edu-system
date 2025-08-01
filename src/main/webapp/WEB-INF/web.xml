@@ -10,8 +10,38 @@
   	<description></description>
   	<servlet-class>com.assignment.controller.ItemController</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>LoginController</servlet-name>
+  	<display-name>LoginController</display-name>
+  	<description></description>
+  	<servlet-class>com.assignment.controller.LoginController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>CustomerController</servlet-name>
+  	<display-name>CustomerController</display-name>
+  	<description></description>
+  	<servlet-class>com.assignment.controller.CustomerController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>BillController</servlet-name>
+  	<display-name>BillController</display-name>
+  	<description></description>
+  	<servlet-class>com.assignment.controller.BillController</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>ItemController</servlet-name>
   	<url-pattern>/ItemController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>LoginController</servlet-name>
+  	<url-pattern>/LoginController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>CustomerController</servlet-name>
+  	<url-pattern>/CustomerController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>BillController</servlet-name>
+  	<url-pattern>/BillController</url-pattern>
   </servlet-mapping>
 </web-app>
