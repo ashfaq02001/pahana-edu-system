@@ -63,7 +63,7 @@ public class ItemDAO {
 				int stock_quantity = resultSet.getInt("stock_quantity");
 
 				// Create and add to list
-				Item item = new Item(item_id, item_name, description, unit_price, category, stock_quantity,null);
+				Item item = new Item(item_id, item_name, description, unit_price, category, stock_quantity, null);
 				items.add(item);
 			}
 		} catch (SQLException e) {
@@ -179,7 +179,38 @@ public class ItemDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-			return success;
+		return success;
+	}
+
+	public int getItemCount() throws SQLException {
+		String query = "SELECT COUNT(*) FROM items";
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBConnectionFactory.getConnection();
+			pstmt = connection.prepareStatement(query);
+			resultSet = pstmt.executeQuery();
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+			return 0;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			// Cleanup code like your existing methods
+			try {
+				if (resultSet != null)
+					resultSet.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (connection != null)
+					connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
+}

@@ -1,7 +1,7 @@
 package com.assignment.controller;
 
 import java.io.IOException;
-
+import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.assignment.model.Customer;
 import com.assignment.service.CustomerService;
@@ -33,7 +34,7 @@ public class CustomerController extends HttpServlet {
 		if (action == null || action.equals("list")) {
 			viewAccountDetails(request, response);
 		} else if (action.equals("addCustomer")) {
-			request.getRequestDispatcher("AddCustomer.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/View/AddCustomer.jsp").forward(request, response);
 		} else if (action.equals("editCustomer")) {
 			showEditForm(request, response);
 		} else if (action.equals("deleteCustomer")) {
@@ -60,7 +61,7 @@ public class CustomerController extends HttpServlet {
 		String address = request.getParameter("address");
 		String telephone = request.getParameter("telephone");
 		String email = request.getParameter("email");
-		
+//		
 		// Create current timestamp for registration date
 		Timestamp registration_date = new Timestamp(System.currentTimeMillis());
 
@@ -71,10 +72,12 @@ public class CustomerController extends HttpServlet {
 		customer.setTelephone(telephone); // Fixed: was setPhone(phone)
 		customer.setEmail(email); // Added missing email
 		customer.setRegistrationDate(registration_date); // Added missing registration date
-
+//
 		customerService.addCustomer(customer);
 		response.sendRedirect("CustomerController?action=list"); // Redirect to list instead of AddCustomer.jsp
 	}
+	
+	
 
 	private void viewAccountDetails(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -85,7 +88,7 @@ public class CustomerController extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace(); // Added error handling
 		}
-		request.getRequestDispatcher("ViewAccountDetails.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/View/ViewAccountDetails.jsp").forward(request, response);
 	}
 	
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
@@ -94,7 +97,7 @@ public class CustomerController extends HttpServlet {
 		try {
 			Customer customer = customerService.getCustomerByAccountNumber(accountNumber);
 			request.setAttribute("customer", customer);
-			request.getRequestDispatcher("EditCustomer.jsp").forward(request, response);
+			request.getRequestDispatcher("WEB-INF/View/EditCustomer.jsp").forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			response.sendRedirect("CustomerController?action=list");

@@ -33,7 +33,7 @@ public class ItemController extends HttpServlet {
         if (action == null || action.equals("list")) {
             ViewItems(request, response);
         } else if (action.equals("addItem")) {
-            request.getRequestDispatcher("AddItem.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/View/AddItem.jsp").forward(request, response);
         } else if (action.equals("editItem")) {
             showEditItem(request, response);
         } else if (action.equals("deleteItem")) {
@@ -67,7 +67,7 @@ public class ItemController extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Error loading items: " + e.getMessage());
         }
-        request.getRequestDispatcher("ViewItems.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/View/ViewItems.jsp").forward(request, response);
     }
 
     private void addItem(HttpServletRequest request, HttpServletResponse response)
@@ -99,7 +99,7 @@ public class ItemController extends HttpServlet {
             Item item = itemService.getItemById(itemId);
             if (item != null) {
                 request.setAttribute("item", item);
-                request.getRequestDispatcher("EditItem.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/View/EditItem.jsp").forward(request, response);
             } else {
                 request.setAttribute("errorMessage", "Item not found");
                 response.sendRedirect("ItemController?action=list");
@@ -134,7 +134,7 @@ public class ItemController extends HttpServlet {
 		} else {
 		    request.setAttribute("errorMessage", "Failed to update item");
 		    request.setAttribute("item", item);
-		    request.getRequestDispatcher("EditItem.jsp").forward(request, response);
+		    request.getRequestDispatcher("WEB-INF/View/EditItem.jsp").forward(request, response);
 		}
     }
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.assignment.model.Customer;
-import com.assignment.model.Item;
+
 
 public class CustomerDAO {
 
@@ -168,6 +168,34 @@ public class CustomerDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public int getCustomerCount() throws SQLException {
+	    String query = "SELECT COUNT(*) FROM customers";
+	    Connection connection = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet resultSet = null;
+	    try {
+	        connection = DBConnectionFactory.getConnection();
+	        pstmt = connection.prepareStatement(query);
+	        resultSet = pstmt.executeQuery();
+	        if (resultSet.next()) {
+	            return resultSet.getInt(1);
+	        }
+	        return 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw e;
+	    } finally {
+	        // Cleanup code like your existing methods
+	        try {
+	            if (resultSet != null) resultSet.close();
+	            if (pstmt != null) pstmt.close();
+	            if (connection != null) connection.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 
 }

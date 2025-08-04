@@ -1,0 +1,264 @@
+@charset "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+/* Header */
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.8;
+        }
+
+        .admin-info {
+            position: absolute;
+            top: 1rem;
+            right: 2rem;
+            text-align: right;
+        }
+
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: inline-block;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+body {
+	font-family: 'Arial', sans-serif;
+	background: #f5f6fa;
+	color: #333;
+	line-height: 1.6;
+}
+
+
+/* FAQ Section */
+.faq-section {
+	background: white;
+	border-radius: 15px;
+	padding: 2rem;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+	margin-bottom: 3rem;
+	max-width:1000px;
+	margin-left:auto;
+	margin-right:auto;
+	
+}
+
+.faq-header {
+	text-align: center;
+	margin-bottom: 2rem;
+}
+
+.faq-header h2 {
+	color: #2c3e50;
+	font-size: 2rem;
+	margin-bottom: 0.5rem;
+}
+
+.faq-item {
+	background: #f8f9fa;
+	border-radius: 10px;
+	margin-bottom: 1rem;
+	overflow: hidden;
+	transition: all 0.3s ease;
+}
+
+.faq-question {
+	background: linear-gradient(135deg, #667eea, #764ba2);
+	color: white;
+	padding: 1.5rem;
+	cursor: pointer;
+	font-weight: 600;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+	background: linear-gradient(135deg, #5a6fd8, #6a42a0);
+}
+
+.faq-question::after {
+	content: "▼";
+	font-size: 1rem;
+	transition: transform 0.3s ease;
+}
+
+.faq-question.active::after {
+	transform: rotate(180deg);
+}
+
+.faq-answer {
+	padding: 0;
+	max-height: 0;
+	overflow: hidden;
+	transition: all 0.3s ease;
+	background: white;
+}
+
+.faq-answer.active {
+	padding: 1.5rem;
+	max-height: 500px;
+}
+
+.faq-answer p {
+	color: #2c3e50;
+	line-height: 1.6;
+}
+
+/* Contact Support Section */
+.support-section {
+	background: linear-gradient(135deg, #2c3e50, #34495e);
+	color: white;
+	padding: 2rem;
+	text-align: center;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+	
+
+}
+
+.support-header h2 {
+	font-size: 2rem;
+	margin-bottom: 1rem;
+}
+
+.support-contacts {
+	display: grid;
+	width:350px;
+	margin-left:auto;
+	margin-right:auto;
+	gap: 2rem;
+	margin-top: 2rem;
+	margin-bottom:15px;
+}
+
+.support-contact {
+	background: rgba(255, 255, 255, 0.1);
+	padding: 1.5rem;
+	border-radius: 10px;
+	backdrop-filter: blur(10px);
+}
+
+.support-contact .icon {
+	font-size: 2rem;
+	
+}
+
+#icon_mail{
+	width: 40px;
+	height: 40px;
+}
+
+.support-contact h3 {
+	margin-bottom: 0.5rem;
+}
+
+.support-contact p {
+	opacity: 0.9;
+}
+
+/* Responsive Design */
+@media ( max-width : 768px) {
+	.help-categories {
+		grid-template-columns: 1fr;
+	}
+	.support-contacts {
+		grid-template-columns: 1fr;
+	}
+	.action-buttons {
+		grid-template-columns: 1fr;
+	}
+	.help-header h1 {
+		font-size: 2rem;
+	}
+	.category-header {
+		flex-direction: column;
+		text-align: center;
+	}
+	.category-icon {
+		margin-right: 0;
+		margin-bottom: 0.5rem;
+	}
+}
+
+/* Animation */
+.help-section, .faq-section, .support-section, .quick-actions,
+	.help-search {
+	animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {from { opacity:0;
+	transform: translateY(30px);
+}
+
+to {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+}
+.help-category:nth-child(1) {
+	animation-delay: 0.1s;
+}
+
+.help-category:nth-child(2) {
+	animation-delay: 0.2s;
+}
+
+.help-category:nth-child(3) {
+	animation-delay: 0.3s;
+}
+
+.help-category:nth-child(4) {
+	animation-delay: 0.4s;
+}
+
+.help-category:nth-child(5) {
+	animation-delay: 0.5s;
+}
+
+.help-category:nth-child(6) {
+	animation-delay: 0.6s;
+}
+
+ul{
+	margin-left:12px;
+}
+
+.img_call{
+	width: 80px;
+	height: 80px;
+	margin:auto;
+	
+}

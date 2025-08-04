@@ -48,6 +48,9 @@ public class ItemService {
 		return itemDAO.deleteItem(itemId);
 	}
 	
+	public int getItemCount() throws SQLException {
+	    return itemDAO.getItemCount();
+	}
 	
 	
 

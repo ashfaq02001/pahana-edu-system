@@ -47,4 +47,7 @@ public class CustomerService {
 		customerDAO.deleteCustomer(accountNumber);
 	}
 	
+	public int getCustomerCount() throws SQLException {
+	    return customerDAO.getCustomerCount();
+	}
 }

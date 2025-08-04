@@ -185,6 +185,93 @@ public class BillDAO {
 			}
 			return billItems;
 		}
+		
+		public List<Bill> getAllBills() throws SQLException {
+		    List<Bill> bills = new ArrayList<>();
+		    String query = "SELECT * FROM bills ORDER BY bill_date DESC";
+		    Connection connection = null;
+		    PreparedStatement pstmt = null;
+		    ResultSet resultSet = null;
+		    try {
+		        connection = DBConnectionFactory.getConnection();
+		        pstmt = connection.prepareStatement(query);
+		        resultSet = pstmt.executeQuery();
+		        
+		        while (resultSet.next()) {
+		            String billId = resultSet.getString("bill_id");
+		            String accountNumber = resultSet.getString("account_number");
+		            Date billDate = resultSet.getDate("bill_date");
+		            double discount = resultSet.getDouble("discount");
+		            double totalAmount = resultSet.getDouble("total_amount");
 
+		            Bill bill = new Bill(billId, accountNumber, billDate, discount, totalAmount);
+		            bills.add(bill);
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        throw e;
+		    } finally {
+		        // Same cleanup as your existing methods
+		        try {
+		            if (resultSet != null) resultSet.close();
+		            if (pstmt != null) pstmt.close();
+		            if (connection != null) connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		    return bills;
+		}
+	
+		
+		public void deleteBill(String billId) throws SQLException {
+		    String query = "DELETE FROM bills WHERE bill_id = ?";
+		    Connection connection = null;
+		    PreparedStatement pstmt = null;
+		    try {
+		        connection = DBConnectionFactory.getConnection();
+		        pstmt = connection.prepareStatement(query);
+		        pstmt.setString(1, billId);
+		        pstmt.executeUpdate();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        throw e;
+		    } finally {
+		        try {
+		            if (pstmt != null) pstmt.close();
+		            if (connection != null) connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		}
+		
+		public int getBillCount() throws SQLException {
+		    String query = "SELECT COUNT(*) FROM bills";
+		    Connection connection = null;
+		    PreparedStatement pstmt = null;
+		    ResultSet resultSet = null;
+		    try {
+		        connection = DBConnectionFactory.getConnection();
+		        pstmt = connection.prepareStatement(query);
+		        resultSet = pstmt.executeQuery();
+		        if (resultSet.next()) {
+		            return resultSet.getInt(1);
+		        }
+		        return 0;
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		        throw e;
+		    } finally {
+		        // Cleanup code like your existing methods
+		        try {
+		            if (resultSet != null) resultSet.close();
+		            if (pstmt != null) pstmt.close();
+		            if (connection != null) connection.close();
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		}
 	}
 
