@@ -7,7 +7,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private String role; // "admin" or "user"
+    private String role; 
     private boolean isActive;
     private Timestamp createdDate;
     private Timestamp lastLogin;

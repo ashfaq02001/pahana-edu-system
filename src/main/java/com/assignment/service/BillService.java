@@ -6,11 +6,11 @@ import java.util.List;
 import com.assignment.dao.BillDAO;
 import com.assignment.model.Bill;
 import com.assignment.model.BillItem;
-import com.assignment.model.Item;
+
 
 public class BillService {
 
-	public static BillService instance;
+	private static BillService instance;
 	private BillDAO billDAO;
 	
 	private BillService() {
@@ -45,7 +45,7 @@ public class BillService {
     }
     
     public List<Bill> getAllBills() throws SQLException {
-        return billDAO.getAllBills(); // You need to add this to DAO
+        return billDAO.getAllBills(); 
     }
     
     public void deleteBill(String billId) throws SQLException {

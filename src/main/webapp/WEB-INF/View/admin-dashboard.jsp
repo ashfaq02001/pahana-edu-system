@@ -1,6 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+    // Check session in JSP
+    if (session == null || session.getAttribute("user") == null) {
+        response.sendRedirect("LoginController?action=login");
+        return;
+    }
+    
+    com.assignment.model.User currentUser = (com.assignment.model.User) session.getAttribute("user");
+    
+    // For admin-only pages, add this additional check:
+    if (!"admin".equals(currentUser.getRole().toLowerCase())) {
+        response.sendRedirect("BillController?action=dashboard");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +25,7 @@
    	<link rel="stylesheet" type="text/css" href="./CSS/admin-style.css">
 </head>
 <body>
+
     <!-- Header -->
     <div class="header">
         <div class="admin-info">
@@ -20,6 +36,37 @@
         <h1>Admin Dashboard</h1>
         <p>PAHANA Book Shop Management System</p>
     </div>
+    
+    <div class="navigation">
+    <div class="nav-links">
+        <a href="LoginController?action=admin" class="nav-link">
+            <span>🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="BillController?action=dashboard" class="nav-link">
+            <span>📄</span>
+            <span>Create Invoice</span>
+        </a>
+        <a href="ItemController?action=viewItems" class="nav-link">
+            <span>📚</span>
+            <span>Manage Items</span>
+        </a>
+        <a href="CustomerController?action=viewCustomers" class="nav-link">
+            <span>👤</span>
+            <span>Manage Customers</span>
+        </a>
+        <a href="BillController?action=viewBills" class="nav-link">
+            <span>📊</span>
+            <span>Manage Bills</span>
+        </a>
+        <a href="LoginController?action=help" class="nav-link">
+            <span>❓</span>  
+            <span>Help</span>   
+        </a>
+    </div>
+</div>
+    <br>
+
 
     <!-- Main Container -->
     <div class="container">
@@ -50,135 +97,8 @@
             </div>
         </div>
 
-        <!-- Main Menu -->
-        <div class="menu-card">
-            <div class="menu-header">
-                <h2>Management Menu</h2>
-                <p>Select an option to manage your book shop</p>
-            </div>
-            
-            <div class="menu-options">
-                <!-- Customer Management -->
-                <div class="menu-section">
-                    <div class="section-title customer">Customer Management</div>
-                    <div class="menu-items">
-                        <a href="CustomerController?action=addCustomer" class="menu-item">
-                            
-                            <div class="menu-text">
-                                <div class="menu-title">Add New Customer</div>
-                                <div class="menu-description">Register new customer accounts</div>
-                            </div>
-                            <div class="menu-arrow">→</div>
-                        </a>
-                        <a href="CustomerController?action=viewCustomers" class="menu-item">
-                            
-                            <div class="menu-text">
-                                <div class="menu-title">View Account Details</div>
-                                <div class="menu-description">Browse and manage customer records</div>
-                            </div>
-                            <div class="menu-arrow">→</div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Bill Management -->
-                <div class="menu-section">
-                    <div class="section-title bill">Bill Management</div>
-                    <div class="menu-items">
-                        <a href="BillController?action=dashboard" class="menu-item">
-                            
-                            <div class="menu-text">
-                                <div class="menu-title">Generate New Bill</div>
-                                <div class="menu-description">Create invoices for book sales</div>
-                            </div>
-                            <div class="menu-arrow">→</div>
-                        </a>
-                        <a href="BillController?action=viewBills" class="menu-item">
-                            
-                            <div class="menu-text">
-                                <div class="menu-title">View All Bills</div>
-                                <div class="menu-description">Browse and manage all sales records</div>
-                            </div>
-                            <div class="menu-arrow">→</div>
-                        </a>
-         
-                    </div>
-                </div>
-
-                <!-- User Management -->
-                <div class="menu-section">
-                    <div class="section-title user">User Management</div>
-                    <div class="menu-items">
-                        <a href="UserController?action=addUser" class="menu-item">
-                            
-                            <div class="menu-text">
-                                <div class="menu-title">Add New User</div>
-                                <div class="menu-description">Create new staff accounts</div>
-                            </div>
-                            <div class="menu-arrow">→</div>
-                        </a>
-                        <a href="UserController?action=viewUsers" class="menu-item">
-                            
-                            <div class="menu-text">
-                                <div class="menu-title">View All Users</div>
-                                <div class="menu-description">Manage system user accounts</div>
-                            </div>
-                            <div class="menu-arrow">→</div>
-                        </a>
-                        <a href="UserController?action=manageRoles" class="menu-item">
-                            
-                            <div class="menu-text">
-                                <div class="menu-title">Manage User Roles</div>
-                                <div class="menu-description">Set permissions and access levels</div>
-                            </div>
-                            <div class="menu-arrow">→</div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Item Management -->
-                <div class="menu-section">
-                    <div class="section-title item">Item Management</div>
-                    <div class="menu-items">
-                        <a href="ItemController?action=addItem" class="menu-item">
-                            
-                            <div class="menu-text">
-                                <div class="menu-title">Add New Book</div>
-                                <div class="menu-description">Add books to inventory</div>
-                            </div>
-                            <div class="menu-arrow">→</div>
-                        </a>
-                        <a href="ItemController?action=viewItems" class="menu-item">
-                            
-                            <div class="menu-text">
-                                <div class="menu-title">View All Items</div>
-                                <div class="menu-description">Browse and manage book inventory</div>
-                            </div>
-                            <div class="menu-arrow">→</div>
-                        </a>
-                     
-                    </div>
-                </div>
-                
-                <div class="menu-section">
-                    <div class="section-title help">Help Section</div>
-                    <div class="menu-items">
-                        <a href="LoginController?action=help" class="menu-item">
-                            <div class="menu-text">
-                                <div class="menu-title">Help</div>
-                                <div class="menu-description">Click here to more help</div>
-                            </div>
-                            <div class="menu-arrow">→</div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
         
-
-        
-
-    <script>
+		<script>
         // Add smooth transitions
         document.addEventListener('DOMContentLoaded', function() {
             const menuItems = document.querySelectorAll('.menu-item');

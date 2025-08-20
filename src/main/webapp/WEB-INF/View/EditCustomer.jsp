@@ -1,50 +1,136 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1" isELIgnored="false"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" isELIgnored="false"%>
+<%
+    // Check session in JSP
+    if (session == null || session.getAttribute("user") == null) {
+        response.sendRedirect("LoginController?action=login");
+        return;
+    }
+    
+    com.assignment.model.User currentUser = (com.assignment.model.User) session.getAttribute("user");
+    
+    // For admin-only pages, add this additional check:
+    if (!"admin".equals(currentUser.getRole().toLowerCase())) {
+        response.sendRedirect("BillController?action=dashboard");
+        return;
+    }
+%>	
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Edit Customer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Customer Account - PAHANA Book Shop</title>
+    <link rel="stylesheet" type="text/css" href="./CSS/add-customer.css">
 </head>
 <body>
-	<h1>Edit Customer</h1>
-	
-	<form action="CustomerController" method="post">
-		<input type="hidden" name="action" value="updateCustomer">
-		
-		<table>
-			<tr>
-				<td>Account Number:</td>
-				<td><input type="text" name="account_no" value="${customer.accountNumber}" readonly></td>
-			</tr>
-			<tr>
-				<td>Name:</td>
-				<td><input type="text" name="name" value="${customer.name}" required></td>
-			</tr>
-			<tr>
-				<td>Address:</td>
-				<td><textarea name="address" rows="3" cols="30" required>${customer.address}</textarea></td>
-			</tr>
-			<tr>
-				<td>Telephone:</td>
-				<td><input type="text" name="telephone" value="${customer.telephone}" required></td>
-			</tr>
-			<tr>
-				<td>Email:</td>
-				<td><input type="email" name="email" value="${customer.email}" required></td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<input type="submit" value="Update Customer">
-					<input type="button" value="Cancel" onclick="window.location.href='CustomerController?action=list'">
-				</td>
-			</tr>
-		</table>
-	</form>
-	
-	<br>
-	<a href="CustomerController?action=list">Back to Customer List</a><br><br>
-	<a href="index.jsp">Back to home</a>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📚Edit Customer</h1>
+            <p>PAHANA Book Shop - Customer Update</p>
+        </div>
+
+        <!-- Form Container -->
+        <div class="form-container">
+            <!-- Info Box -->
+            <div class="form-info">
+                <p>💡<strong>Note:</strong> Account number cannot be changed. Please change other required fields marked with <span class="required">*</span></p>
+            </div>
+
+            <form action="CustomerController" method="post">
+                <input type="hidden" name="action" value="updateCustomer">
+
+                <!-- Account Number -->
+                <div class="form-group account-number-group">
+                    <label for="account_no">Account Number <span class="required">*</span></label>
+                    <input type="text" id="account_no" name="account_no" value="${customer.accountNumber}" readonly required>
+                    <span class="info-icon" title="Auto-generated account number">🔢</span>
+                </div>
+
+                <!-- Customer Name -->
+                <div class="form-group">
+                    <label for="name">Customer Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" value="${customer.name}" placeholder="Enter full name" required>
+                </div>
+
+                <!-- Address -->
+                <div class="form-group">
+                    <label for="address">Address <span class="required">*</span></label>
+                    <textarea id="address" name="address" rows="3" placeholder="Enter complete address" required>${customer.address}</textarea>
+                </div>
+
+                <!-- Contact Information Row -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telephone">Telephone <span class="required">*</span></label>
+                        <input type="tel" id="telephone" name="telephone" value="${customer.telephone}" placeholder="+94 XX XXX XXXX" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" name="email" value="${customer.email}" placeholder="example@email.com" required>
+                    </div>
+                </div>
+
+                <!-- Button Group -->
+                <div class="button-group">
+                    <input type="submit" value="✅ Update" class="btn btn-primary" onclick="msgUpdate()">
+                    <input type="reset" value="❌ Cancel" class="btn btn-secondary" onclick="window.location.href='CustomerController?action=list'">
+                </div>
+            </form>
+        </div> 
+    </div>
+
+    <script>
+        
+
+       
+
+        // Add form validation
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const name = document.getElementById('name').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const telephone = document.getElementById('telephone').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            if (!name || !address || !telephone || !email) {
+                e.preventDefault();
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Basic email validation
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                e.preventDefault();
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            // Basic phone validation
+            const phonePattern = /^[+]?[\d\s\-()]+$/;
+            if (!phonePattern.test(telephone)) {
+                e.preventDefault();
+                alert('Please enter a valid telephone number.');
+                return;
+            }
+        });
+
+        // Auto-format phone number
+        document.getElementById('telephone').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.startsWith('94')) {
+                value = '+' + value;
+            } else if (value.startsWith('0')) {
+                value = '+94 ' + value.substring(1);
+            }
+            e.target.value = value;
+        });
+        
+        function msgUpdate(){
+        	alert('Customer Updated Successfully');
+        }
+    </script>
 </body>
 </html>

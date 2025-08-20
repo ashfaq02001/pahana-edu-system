@@ -10,7 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 import com.assignment.model.Bill;
 import com.assignment.model.BillItem;
@@ -271,7 +271,7 @@ public class BillController extends HttpServlet {
 			Font normalFont = FontFactory.getFont(FontFactory.HELVETICA, 10);
 			Font boldFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
 
-			Paragraph title = new Paragraph("PAHANA EDU (PVT) Ltd", titleFont);
+			Paragraph title = new Paragraph("PAHANA EDU Book Shop", titleFont);
 			title.setAlignment(Element.ALIGN_CENTER);
 			document.add(title);
 
@@ -279,7 +279,7 @@ public class BillController extends HttpServlet {
 			address.setAlignment(Element.ALIGN_CENTER);
 			document.add(address);
 
-			Paragraph contact = new Paragraph("Tel: +94 76 77 60113 | Email: info@pahana.edu.lk", normalFont);
+			Paragraph contact = new Paragraph("Tel: +94 77 12 34567 | Email: info@pahana.edu.lk", normalFont);
 			contact.setAlignment(Element.ALIGN_CENTER);
 			document.add(contact);
 

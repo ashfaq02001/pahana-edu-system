@@ -1,60 +1,71 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAHANA Book Shop - Billing System</title>
-  	<link rel="stylesheet" href="./CSS/index.css">
+<meta charset="UTF-8">
+<title>Login - Pahana Edu</title>
+<link rel="stylesheet" href="./CSS/login.css">
+
+<script>
+    function validateForm() {
+        var username = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+        
+        if (username.trim() === "") {
+            alert("Please enter username");
+            return false;
+        }
+        
+        if (password.trim() === "") {
+            alert("Please enter password");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    window.onload = function() {
+        // Show messages if any
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('message') === 'logged_out') {
+            alert("You have been logged out successfully");
+        }
+        if (urlParams.get('error') === 'unknown_role') {
+            alert("Access denied. Unknown user role.");
+        }
+    }
+</script>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="shop-logo">PAHANA EDU (PVT) LTD</div>
-            <div class="shop-subtitle">Billing Management System</div>
-        </div>
+    <div class="login-container">
+    	<div class="system-title">Welcome to Pahana Billing System</div>
+        <h1>Login</h1>
+        <h3>Welcome back! Please login in to continue</h3>
 
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="welcome-section">
-                <h2 id="greeting">Welcome!</h2>
-                <p>Manage your book shop operations efficiently with our comprehensive billing solution.</p>
+        <!-- Error Message -->
+        <c:if test="${not empty errorMessage}">
+            <div class="error">${errorMessage}</div>
+        </c:if>
+
+        <form action="LoginController" method="post" onsubmit="return validateForm()">
+            <input type="hidden" name="action" value="authenticate">
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter password" required>
+
+            <div class="remember">
+                <input type="checkbox" id="rememberMe" name="rememberMe">
+                <label for="rememberMe">Remember me for 7 days</label>
             </div>
 
-            <!-- Login & Help Section -->
-            <div class="login-section">
-                <h3>Access Required</h3>
-                <p>Please login to continue or visit our help section for guidance.</p>
-                <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                    <a href="LoginController?action=login" class="login-button">Login to System</a>
-                </div>
-            </div>
-        </div>
-
-        
+            <input type="submit" value="Login">
+        </form>
     </div>
-
-    <script>
-        function getGreeting() {
-            const now = new Date();
-            const hour = now.getHours();
-            let greeting = "";
-
-            if (hour < 12) {
-                greeting = "Good Morning! Welcome to Pahana";
-            } else if (hour < 17) {
-                greeting = "Good Afternoon! Welcome to Pahana";
-            } else if (hour < 21) {
-                greeting = "Good Evening! Welcome to Pahana";
-            } else {
-                greeting = "Good Night! Welcome to Pahana";
-            }
-
-            return greeting;
-        }
-
-        document.getElementById("greeting").innerText = getGreeting();
-    </script>
+    
 </body>
 </html>

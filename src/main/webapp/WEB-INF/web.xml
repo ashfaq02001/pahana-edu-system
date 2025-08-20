@@ -33,6 +33,7 @@
   	<display-name>SessionFilter</display-name>
   	<description></description>
   	<servlet-class>com.assignment.controller.SessionFilter</servlet-class>
+  	
   </servlet>
   <servlet-mapping>
   	<servlet-name>ItemController</servlet-name>

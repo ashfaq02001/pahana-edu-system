@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
+<%
+    // Check session in JSP
+    if (session == null || session.getAttribute("user") == null) {
+        response.sendRedirect("LoginController?action=login");
+        return;
+    }
+    
+    com.assignment.model.User currentUser = (com.assignment.model.User) session.getAttribute("user");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -167,7 +176,7 @@
             }
         }
         
-        // Updated time function
+        //Time function
         function updateTime() {
             var today = new Date();
             var currentTime = today.toLocaleTimeString('en-US', { 
@@ -195,7 +204,7 @@
             }
         }
         
-     // Add this to your existing JavaScript section
+     	//help
         function toggleHelp() {
             var helpPanel = document.getElementById('helpPanel');
             var helpBtn = document.getElementById('helpBtn');
@@ -243,7 +252,7 @@
                 <div class="date-display" id="todayDate">📅 Loading date and time...</div>
             </div>
             <div class="header-center">
-                <h1>📄 Billing Dashboard</h1>
+                <h1>Billing Dashboard</h1>
             </div>
             <div class="header-right">
                 <div class="user-info">
@@ -329,7 +338,33 @@
         <c:if test="${param.error == 'customer_not_found'}">
             <script>alert("Customer not found");</script>
         </c:if>
-        
+     <c:if test="${sessionScope.role eq 'admin'}">   
+        <div class="navigation">
+    <div class="nav-links">
+        <a href="LoginController?action=admin" class="nav-link">
+            <span>🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="ItemController?action=viewItems" class="nav-link">
+            <span>📚</span>
+            <span>Manage Items</span>
+        </a>
+        <a href="CustomerController?action=viewCustomers" class="nav-link">
+            <span>👤</span>
+            <span>Manage Customers</span>
+        </a>
+        <a href="BillController?action=viewBills" class="nav-link">
+            <span>📊</span>
+            <span>Manage Bills</span>
+        </a>
+        <a href="LoginController?action=help" class="nav-link">
+            <span>❓</span>
+            <span>Help</span>
+        </a>
+    </div>
+</div>
+</c:if>
+        <br>
         <!-- Customer Selection -->
         <div class="section-card">
             <h2 class="section-title">👤 Customer</h2>
@@ -403,16 +438,8 @@
         </div>
 
         <!-- Navigation -->
-        <c:if test="${sessionScope.role eq 'admin'}">
-    <div class="navigation">
-        <div class="nav-links">
-            <a href="BillController?action=viewBills" class="nav-link">📋 View All Bills</a>
-            <a href="CustomerController?action=addCustomer" class="nav-link">👤 Add Customer</a>
-            <a href="ItemController?action=viewItems" class="nav-link">📚 Manage Items</a>
-            <a href="LoginController?action=admin" class="nav-link">🏠 Home</a>
-        </div>
-    </div>
-</c:if>
+        
+
     </div>
 </body>
 </html>

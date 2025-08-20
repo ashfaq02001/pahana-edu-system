@@ -369,41 +369,56 @@ button[onclick="newBill()"]:hover {
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
-/* Navigation Section - Admin Style */
+/* Navigation */
 .navigation {
     background: white;
+    padding: 2rem;
     border-radius: 15px;
-    padding: 1.5rem;
     text-align: center;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    margin-top: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.nav-title {
+    color: #2c3e50;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
 }
 
 .nav-links {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
 }
 
 .nav-link {
-    color: #2c3e50;
+    color: #667eea;
     text-decoration: none;
     font-weight: 500;
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
+    padding: 12px 20px;
+    border-radius: 25px;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    border: 2px solid #e9ecef;
     background: #f8f9fa;
-    border: 2px solid transparent;
 }
 
 .nav-link:hover {
-    background: white;
-    border-color: #3498db;
-    color: #3498db;
-    transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    background: #667eea;
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    border-color: #667eea;
 }
+
+.nav-link span:first-child {
+    font-size: 1.1rem;
+}
+
 
 /* Responsive Design */
 @media (max-width: 1024px) {

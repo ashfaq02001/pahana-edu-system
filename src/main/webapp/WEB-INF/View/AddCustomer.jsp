@@ -1,4 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+    // Check session in JSP
+    if (session == null || session.getAttribute("user") == null) {
+        response.sendRedirect("LoginController?action=login");
+        return;
+    }
+    
+    com.assignment.model.User currentUser = (com.assignment.model.User) session.getAttribute("user");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,8 +68,9 @@
 
                 <!-- Button Group -->
                 <div class="button-group">
-                    <input type="submit" value="✅ Add Customer" class="btn btn-primary">
+                    <input type="submit" value="✅ Add Customer" class="btn btn-primary" onclick="msgAdd()">
                     <input type="reset" value="🔄 Clear Form" class="btn btn-secondary">
+                    <input type="reset" value="❌ Cancel" class="btn btn-secondary" onclick="window.location.href='CustomerController?action=list'">
                 </div>
             </form>
         </div> 
@@ -128,6 +138,10 @@
             }
             e.target.value = value;
         });
+        
+        function msgAdd(){
+        	alert('Customer Added Successfully');
+        }
     </script>
 </body>
 </html>

@@ -2,6 +2,22 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%
+    // Check session in JSP
+    if (session == null || session.getAttribute("user") == null) {
+        response.sendRedirect("LoginController?action=login");
+        return;
+    }
+    
+    com.assignment.model.User currentUser = (com.assignment.model.User) session.getAttribute("user");
+    
+    // For admin-only pages, add this additional check:
+    if (!"admin".equals(currentUser.getRole().toLowerCase())) {
+        response.sendRedirect("BillController?action=dashboard");
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,12 +30,20 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1>📚 Item Management</h1>
-            <p class="subtitle">PAHANA Edu Book Shop</p>
+    <!-- Header -->
+    <div class="header">
+        <div class="admin-info">
+            <div>Welcome, <strong>${sessionScope.username}</strong></div>
+            <div style="font-size: 0.8rem; opacity: 0.8;">Administrator</div>
+            <a href="LoginController?action=logout" class="logout-btn">Logout</a>
         </div>
+        <h1>Item Management</h1>
+        <p>PAHANA Book Shop - View Customer Details</p>
+        <div class="customer-count">
+            Total Items: <strong>${items.size()}</strong>
+        </div>
+    </div>
+    
 
         <!-- Error Message -->
         <c:if test="${not empty errorMessage}">
@@ -27,7 +51,38 @@
                 ${errorMessage}
             </div>
         </c:if>
+        
+        <div class="navigation">
+    <div class="nav-links">
+        <a href="LoginController?action=admin" class="nav-link">
+            <span>🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="BillController?action=dashboard" class="nav-link">
+            <span>📄</span>
+            <span>Create Invoice</span>
+        </a>
+        <a href="ItemController?action=viewItems" class="nav-link">
+            <span>📚</span>
+            <span>Manage Items</span>
+        </a>
+        <a href="CustomerController?action=viewCustomers" class="nav-link">
+            <span>👤</span>
+            <span>Manage Customers</span>
+        </a>
+        <a href="BillController?action=viewBills" class="nav-link">
+            <span>📊</span>
+            <span>Manage Bills</span>
+        </a>
+        <a href="LoginController?action=help" class="nav-link">
+            <span>❓</span>
+            <span>Help</span>
+        </a>
+    </div>
+</div>
 
+  <br>
+	<div class="page-content">
         <!-- Action Bar -->
         <div class="action-bar">
             <div class="action-left">
@@ -48,8 +103,8 @@
         <!-- Table Container -->
         <div class="table-container">
             <div class="table-header">
-                <h2>📖 Book Inventory</h2>
-                <p>Manage your book collection and stock levels</p>
+                <h2>Item Inventory</h2>
+                <p>Manage your items and stock levels</p>
             </div>
 
             <c:choose>
@@ -141,25 +196,10 @@
                 </c:otherwise>
             </c:choose>
         </div>
+        </div>
 
         <!-- Navigation -->
-        <div class="navigation">
-            <div class="nav-links">
-                <a href="ItemController?action=addItem" class="nav-link">
-                    ➕ Add New Item
-                </a>
-                <a href="BillController?action=dashboard" class="nav-link">
-                    🧾 Generate Bill
-                </a>
-                <a href="index.jsp" class="nav-link">
-                    🏠 Back to Home 127744
-                </a>
-                <a href="LoginController?action=logout" class="nav-link">
-                    🚪 Logout
-                </a>
-            </div>
-        </div>
-    </div>
+
 
     <script>
         // Search functionality
@@ -214,5 +254,4 @@
         }
     </script>
 </body>
-</html>
 </html>
