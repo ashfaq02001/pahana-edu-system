@@ -16,6 +16,15 @@
         return;
     }
 %>
+<%
+String successMsg = (String) session.getAttribute("successMessage");
+if (successMsg != null) {
+    session.removeAttribute("successMessage");
+%>
+    <script>alert("✅ <%= successMsg %>");</script>
+<%
+}
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,7 +96,7 @@
         <!-- Controls Section -->
         <div class="controls-section">
             <div class="search-section">
-                <input type="text" class="search-input" placeholder="🔍 Search customers by name, email, or phone..." id="searchInput" onkeyup="searchCustomers()">
+                <input type="text" class="search-input" placeholder="🔍 Search customers" id="searchInput" onkeyup="searchCustomers()">
                 <button class="search-btn" onclick="searchCustomers()">Search</button>
             </div>
             <a href="CustomerController?action=addCustomer" class="add-customer-btn">
@@ -99,7 +108,7 @@
         <!-- Customers Table -->
         <div class="customers-table-container">
             <div class="table-header">
-                <h3>📋 Customer Accounts</h3>
+                <h3>Customer Accounts</h3>
                 <p>Manage and view all registered customers</p>
             </div>
             
@@ -108,13 +117,13 @@
                     <table class="customers-table" id="customersTable">
                         <thead>
                             <tr>
-                                <th>🔢 Account Number</th>
-                                <th>👤 Name</th>
-                                <th>🏠 Address</th>
-                                <th>📞 Telephone</th>
-                                <th>📧 Email</th>
-                                <th>📅 Registration Date</th>
-                                <th>⚙️ Actions</th>
+                                <th>Account Number</th>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Telephone</th>
+                                <th>Email</th>
+                                <th>Registration Date</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -129,10 +138,10 @@
                                     <td>
                                         <div class="action-buttons">
                                             <a href="CustomerController?action=editCustomer&id=<c:out value='${customer.accountNumber}' />" 
-                                               class="btn btn-edit">✏️ Edit</a>
+                                               class="btn btn-edit">Edit</a>
                                             <a href="CustomerController?action=deleteCustomer&id=<c:out value='${customer.accountNumber}' />" 
                                                class="btn btn-delete"
-                                               onclick="return confirm('Are you sure you want to delete this customer?')">🗑️ Delete</a>
+                                               onclick="return confirm('Are you sure you want to delete this customer?')">Delete</a>
                                         </div>
                                     </td>
                                 </tr>
@@ -148,7 +157,7 @@
                         <br>
                         <a href="CustomerController?action=addCustomer" class="add-customer-btn">
                             <span>➕</span>
-                            <span>Add First Customer</span>
+                            <span>Add New Customer</span>
                         </a>
                     </div>
                 </c:otherwise>

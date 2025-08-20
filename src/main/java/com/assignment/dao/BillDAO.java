@@ -165,7 +165,7 @@ public class BillDAO {
 	}
 
 	public void deleteBill(String billId) throws SQLException {
-		String query = "DELETE FROM bills WHERE bill_id = ?";
+		String query = "DELETE FROM bill_items WHERE bill_id = ?";
 
 		try (Connection connection = DBConnectionFactory.getConnection();
 				PreparedStatement pstmt = connection.prepareStatement(query)) {

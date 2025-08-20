@@ -42,7 +42,7 @@
 
         <!-- Info Box -->
         <div class="form-info">
-            <p>💡 <strong>Note:</strong> Item ID and Ctegory cannot be changed. Please change other required fields marked with <span class="required">*</span></p>
+            <p>💡 <strong>Note:</strong> Item ID and Category cannot be changed. Please change other required fields marked with <span class="required">*</span></p>
         </div>
 
         <form action="ItemController?action=updateItem" method="post" id="form">
@@ -61,8 +61,8 @@
 
             <!-- Description -->
             <div class="form-group">
-                <label for="description">Description <span class="required">*</span></label>
-                <textarea name="description" id="description" rows="3" placeholder="Enter item description" required>${item.description}</textarea>
+                <label for="description">Description <span class="required"></span></label>
+                <textarea name="description" id="description" rows="3" placeholder="Enter item description">${item.description}</textarea>
             </div>
 
             <!-- Category -->

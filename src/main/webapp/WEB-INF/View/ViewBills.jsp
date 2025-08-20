@@ -151,13 +151,13 @@
                 </c:when>
                 <c:otherwise>
                     <div class="empty-state">
-                        <div class="empty-state-icon">👥</div>
-                        <h3>No Customers Found</h3>
-                        <p>Start by adding your first customer to the system.</p>
+                        <div class="empty-state-icon">📄</div>
+                        <h3>No Bills Found</h3>
+                        <p>Start by creating your first bill.</p>
                         <br>
-                        <a href="CustomerController?action=addCustomer" class="add-customer-btn">
+                        <a href="BillController?action=dashboard" class="add-customer-btn">
                             <span>➕</span>
-                            <span>Add First Customer</span>
+                            <span>Create New Bill</span>
                         </a>
                     </div>
                 </c:otherwise>

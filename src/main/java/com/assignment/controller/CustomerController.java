@@ -78,6 +78,7 @@ public class CustomerController extends HttpServlet {
 		customer.setRegistrationDate(registration_date); // Added missing registration date
 //
 		customerService.addCustomer(customer);
+		request.getSession().setAttribute("successMessage", "Customer added successfully!");
 		response.sendRedirect("CustomerController?action=list"); // Redirect to list instead of AddCustomer.jsp
 	}
 	

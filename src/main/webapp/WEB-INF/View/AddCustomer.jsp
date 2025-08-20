@@ -36,7 +36,7 @@
 
                 <!-- Account Number -->
                 <div class="form-group account-number-group">
-                    <label for="account_no">Account Number <span class="required">*</span></label>
+                    <label for="account_no">Account Number <span class="required"></span></label>
                     <input type="text" id="account_no" name="account_no" readonly required>
                     <span class="info-icon" title="Auto-generated account number">🔢</span>
                 </div>
@@ -69,8 +69,7 @@
                 <!-- Button Group -->
                 <div class="button-group">
                     <input type="submit" value="✅ Add Customer" class="btn btn-primary" onclick="msgAdd()">
-                    <input type="reset" value="🔄 Clear Form" class="btn btn-secondary">
-                    <input type="reset" value="❌ Cancel" class="btn btn-secondary" onclick="window.location.href='CustomerController?action=list'">
+                    <input type="button" value="❌ Cancel" class="btn btn-secondary" onclick="window.location.href='CustomerController?action=list'">
                 </div>
             </form>
         </div> 
@@ -84,21 +83,22 @@
             var year = today.getFullYear().toString().substr(-2); // Last 2 digits of year
             var month = String(today.getMonth() + 1).padStart(2, '0'); // Month with leading zero
 
-            // Generate random 4-digit number
+            // Generating random 4-digit number
             var randomNum = Math.floor(1000 + Math.random() * 9000);
 
-            // Create account number format: PHN/YY/MM/XXXX
+            // Account number format
             var accountNumber = "PHN/" + year + "/" + month + "/" + randomNum;
 
             return accountNumber;
         }
 
-        // Function to set account number when page loads
+        // Setting account number when page loads
         window.onload = function() {
             document.getElementById("account_no").value = generateAccountNumber();
         }
-
-        // Add form validation
+        
+      
+        // Form Validation
         document.querySelector('form').addEventListener('submit', function(e) {
             const name = document.getElementById('name').value.trim();
             const address = document.getElementById('address').value.trim();
@@ -111,7 +111,7 @@
                 return;
             }
 
-            // Basic email validation
+            // Email address validation
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailPattern.test(email)) {
                 e.preventDefault();
@@ -119,7 +119,7 @@
                 return;
             }
 
-            // Basic phone validation
+            // Phone number validation
             const phonePattern = /^[+]?[\d\s\-()]+$/;
             if (!phonePattern.test(telephone)) {
                 e.preventDefault();
@@ -127,21 +127,6 @@
                 return;
             }
         });
-
-        // Auto-format phone number
-        document.getElementById('telephone').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.startsWith('94')) {
-                value = '+' + value;
-            } else if (value.startsWith('0')) {
-                value = '+94 ' + value.substring(1);
-            }
-            e.target.value = value;
-        });
-        
-        function msgAdd(){
-        	alert('Customer Added Successfully');
-        }
     </script>
 </body>
 </html>

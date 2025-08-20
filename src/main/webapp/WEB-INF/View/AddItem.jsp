@@ -24,6 +24,7 @@
 <link rel="stylesheet" type="text/css" href="./CSS/add-item.css">
 </head>
 <body>
+
 <div class="container">
     <!-- Header -->
     <div class="header">
@@ -39,7 +40,7 @@
                 <p><strong>⚠️ Error:</strong> ${errorMessage}</p>
             </div>
         </c:if>
-
+        
         <!-- Info Box -->
         <div class="form-info">
             <p>💡 <strong>Note:</strong> Item ID is auto-generated based on category selection. Please fill in all required fields marked with <span class="required">*</span></p>
@@ -48,8 +49,8 @@
         <form action="ItemController?action=addItem" method="post" id="form">
             <!-- Item ID -->
             <div class="form-group account-number-group">
-                <label for="item_id">Item ID <span class="required">*</span></label>
-                <input type="text" name="item_id" id="item_id" readonly required>
+                <label for="item_id">Item ID <span class="required"></span></label>
+                <input type="text" name="item_id" id="item_id" placeholder="Auto Generated" readonly required>
                 <span class="info-icon" title="Auto-generated based on category">🏷️</span>
             </div>
 
@@ -61,8 +62,8 @@
 
             <!-- Description -->
             <div class="form-group">
-                <label for="description">Description <span class="required">*</span></label>
-                <textarea name="description" id="description" rows="3" placeholder="Enter item description" required></textarea>
+                <label for="description">Description <span class="required"></span></label>
+                <textarea name="description" id="description" rows="3" placeholder="Enter item description"></textarea>
             </div>
 
             <!-- Category -->
@@ -91,8 +92,7 @@
 
             <!-- Button Group -->
             <div class="button-group">
-                <button type="submit" id="submit" class="btn btn-primary" onclick="msgAdd()">✅ Add Item</button>
-                <button type="reset" class="btn btn-secondary">🔄 Clear Form</button>
+                <button type="submit" id="submit" class="btn btn-primary" >✅ Add Item</button>
                 <input type="reset" value="❌ Cancel" class="btn btn-secondary" onclick="window.location.href='ItemController?action=list'">
             </div>
         </form>
@@ -100,7 +100,7 @@
 </div>
 
 <script>
-document.getElementById('category').addEventListener('change', function() {
+ document.getElementById('category').addEventListener('change', function() {
     const category = this.value;
     const itemIdField = document.getElementById('item_id');
 
@@ -109,7 +109,7 @@ document.getElementById('category').addEventListener('change', function() {
         const timestamp = Date.now().toString().slice(-4);
         itemIdField.value = prefix + " - " + timestamp;
     }
-});
+}); 
 
 document.querySelector('form').addEventListener('submit', function(e) {
     const price = parseFloat(document.getElementById('unit-price').value);
@@ -128,9 +128,7 @@ document.querySelector('form').addEventListener('submit', function(e) {
     }
 });
 
-function msgAdd(){
-	alert('Item Added Successfully');
-}
+
 
 </script>
 </body>

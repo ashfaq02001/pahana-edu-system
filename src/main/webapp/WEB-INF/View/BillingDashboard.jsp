@@ -434,7 +434,7 @@
             <h2 class="section-title">⚡ Actions</h2>
             <button id="saveBtn" onclick="saveBill()">Save Bill</button>
             <button id="printBtn" onclick="printBill()" disabled>Print Receipt</button>
-            <button onclick="newBill()">New Bill</button>
+            <button onclick="newBill()" id="new_bill">New Bill</button>
         </div>
 
         <!-- Navigation -->

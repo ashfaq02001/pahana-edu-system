@@ -88,6 +88,7 @@ public class ItemController extends HttpServlet {
         item.setStockQuantity(stockQuantity);
         
         itemService.addItem(item);
+        request.getSession().setAttribute("successMessage", "Item added successfully!");
         response.sendRedirect("ItemController?action=list");
     }
 

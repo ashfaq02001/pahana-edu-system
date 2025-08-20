@@ -17,6 +17,15 @@
         return;
     }
 %>
+<%
+String successMsg = (String) session.getAttribute("successMessage");
+if (successMsg != null) {
+    session.removeAttribute("successMessage");
+%>
+    <script>alert("✅ <%= successMsg %>");</script>
+<%
+}
+%>
 
 <!DOCTYPE html>
 <html>
@@ -43,8 +52,7 @@
             Total Items: <strong>${items.size()}</strong>
         </div>
     </div>
-    
-
+   
         <!-- Error Message -->
         <c:if test="${not empty errorMessage}">
             <div class="alert">
@@ -86,9 +94,6 @@
         <!-- Action Bar -->
         <div class="action-bar">
             <div class="action-left">
-                <div class="item-count">
-                    📊 Total Items: <c:out value="${items.size()}" default="0"/>
-                </div>
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="Search items...">
                 </div>
@@ -179,13 +184,13 @@
                                         <div class="action-buttons">
                                             <a href="ItemController?action=editItem&id=<c:out value='${item.item_Id}' />" 
                                                class="action-btn btn-edit" title="Edit Item">
-                                                ✏️ Edit
+                                                Edit
                                             </a>
                                             <a href="ItemController?action=deleteItem&id=<c:out value='${item.item_Id}' />" 
                                                class="action-btn btn-delete" 
                                                onclick="return confirm('Are you sure you want to delete this item?')"
                                                title="Delete Item">
-                                                🗑️ Delete
+                                                Delete
                                             </a>
                                         </div>
                                     </td>

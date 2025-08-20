@@ -358,6 +358,11 @@ button[onclick="addItemToTable()"]:hover {
     box-shadow: none;
 }
 
+
+#new_bill{
+	background: skyblue;
+}
+
 button[onclick="newBill()"] {
     background: #95a5a6;
     color: white;
