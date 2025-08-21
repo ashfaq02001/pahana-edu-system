@@ -63,7 +63,7 @@
             <span>Manage Customers</span>
         </a>
         <a href="BillController?action=viewBills" class="nav-link">
-            <span>📊</span>
+            <span>📝</span>
             <span>Manage Bills</span>
         </a>
         <a href="LoginController?action=help" class="nav-link">
@@ -88,7 +88,7 @@
         <!-- Controls Section -->
         <div class="controls-section">
             <div class="search-section">
-                <input type="text" class="search-input" placeholder="🔍 Search customers by name, email, or phone..." id="searchInput" onkeyup="searchCustomers()">
+                <input type="text" class="search-input" placeholder="🔍 Search bills" id="searchInput" onkeyup="searchCustomers()">
                 <button class="search-btn" onclick="searchCustomers()">Search</button>
             </div>
             <a href="BillController?action=dashboard" class="add-customer-btn">
@@ -140,7 +140,7 @@
                                     <c:if test="${sessionScope.role eq 'admin'}">
                                     <td>
                                     <div class="action-buttons">
-                                    	<a href="BillController?action=deleteBill&billId=${bill.billId}" class="btn btn-delete" onclick="return confirm('Delete this bill?')">🗑️Delete</a>  
+                                    	<a href="BillController?action=deleteBill&billId=${bill.billId}" class="btn btn-delete" onclick="return confirm('Delete this bill?')">Delete</a>  
                                     </div>	
                                     </td>
                                     </c:if>

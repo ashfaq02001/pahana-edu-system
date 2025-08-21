@@ -100,6 +100,7 @@
 </div>
 
 <script>
+ // creating auto item id when selecting category
  document.getElementById('category').addEventListener('change', function() {
     const category = this.value;
     const itemIdField = document.getElementById('item_id');
@@ -111,6 +112,7 @@
     }
 }); 
 
+ // price validation
 document.querySelector('form').addEventListener('submit', function(e) {
     const price = parseFloat(document.getElementById('unit-price').value);
     const quantity = parseInt(document.getElementById('stock-quantity').value);
@@ -127,8 +129,6 @@ document.querySelector('form').addEventListener('submit', function(e) {
         return;
     }
 });
-
-
 
 </script>
 </body>

@@ -56,7 +56,7 @@
             <span>Manage Customers</span>
         </a>
         <a href="BillController?action=viewBills" class="nav-link">
-            <span>📊</span>
+            <span>📝</span>
             <span>Manage Bills</span>
         </a>
         <a href="LoginController?action=help" class="nav-link">

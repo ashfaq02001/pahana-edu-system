@@ -33,7 +33,7 @@
             var price = parseFloat(option.getAttribute("data-price")) || 0;
             var stock = parseInt(option.getAttribute("data-stock")) || 0;
             
-            document.getElementById("unitPriceDisplay").innerHTML = "$" + price.toFixed(2);
+            document.getElementById("unitPriceDisplay").innerHTML = "Rs. " + price.toFixed(2);
             document.getElementById("stockDisplay").innerHTML = "Stock: " + stock;
         }
         
@@ -74,14 +74,14 @@
             var price = parseFloat(option.getAttribute("data-price"));
             var total = quantity * price;
             
-            row.innerHTML = '<td>' + option.text + '</td><td>' + quantity + '</td><td>$' + price.toFixed(2) + '</td><td>$' + total.toFixed(2) + '</td><td><button onclick="removeRow(this)">Remove</button></td>';
+            row.innerHTML = '<td>' + option.text + '</td><td>' + quantity + '</td><td>Rs. ' + price.toFixed(2) + '</td><td>Rs. ' + total.toFixed(2) + '</td><td><button onclick="removeRow(this)">Remove</button></td>';
             row.setAttribute('data-item-id', option.value);
             row.setAttribute('data-quantity', quantity);
             
             // Reset
             itemSelect.selectedIndex = 0;
             quantityInput.value = "";
-            document.getElementById("unitPriceDisplay").innerHTML = "$0.00";
+            document.getElementById("unitPriceDisplay").innerHTML = "Rs. 0.00";
             document.getElementById("stockDisplay").innerHTML = "Stock: 0";
             
             calculateTotal();
@@ -96,16 +96,16 @@
             var total = 0;
             var table = document.getElementById("itemsTable");
             for (var i = 1; i < table.rows.length; i++) {
-                total += parseFloat(table.rows[i].cells[3].innerHTML.replace('$', ''));
+                total += parseFloat(table.rows[i].cells[3].innerHTML.replace('Rs. ', ''));
             }
             
             var discount = parseFloat(document.getElementById("discount").value) || 0;
             var discountAmt = (total * discount) / 100;
             var finalTotal = total - discountAmt;
             
-            document.getElementById("subtotal").innerHTML = "$" + total.toFixed(2);
-            document.getElementById("discountAmount").innerHTML = "$" + discountAmt.toFixed(2);
-            document.getElementById("total").innerHTML = "$" + finalTotal.toFixed(2);
+            document.getElementById("subtotal").innerHTML = "Rs. " + total.toFixed(2);
+            document.getElementById("discountAmount").innerHTML = "Rs. " + discountAmt.toFixed(2);
+            document.getElementById("total").innerHTML = "Rs. " + finalTotal.toFixed(2);
         }
         
         function saveBill() {
@@ -150,7 +150,7 @@
             document.getElementById("customerName").innerHTML = "Customer: ";
             document.getElementById("itemSelect").selectedIndex = 0;
             document.getElementById("quantityInput").value = "";
-            document.getElementById("unitPriceDisplay").innerHTML = "$0.00";
+            document.getElementById("unitPriceDisplay").innerHTML = "Rs. 0.00";
             document.getElementById("stockDisplay").innerHTML = "Stock: 0";
             document.getElementById("discount").value = "0";
             
@@ -367,7 +367,7 @@
         <br>
         <!-- Customer Selection -->
         <div class="section-card">
-            <h2 class="section-title">👤 Customer</h2>
+            <h2 class="section-title">Customer</h2>
             <table>
                 <tr>
                     <td>Select Customer:</td>
@@ -388,7 +388,7 @@
         
         <!-- Add Items -->
         <div class="section-card">
-            <h2 class="section-title">📚 Add Items</h2>
+            <h2 class="section-title">Add Items</h2>
             <table>
                 <tr>
                     <td>Item:</td>
@@ -404,7 +404,7 @@
                     </td>
                 </tr>
                 <tr><td>Quantity:</td><td><input type="number" id="quantityInput" min="1"></td></tr>
-                <tr><td>Unit Price:</td><td><span id="unitPriceDisplay">$0.00</span></td></tr>
+                <tr><td>Unit Price:</td><td><span id="unitPriceDisplay">Rs. 0.00</span></td></tr>
                 <tr><td>Stock:</td><td><span id="stockDisplay">Stock: 0</span></td></tr>
                 <tr><td colspan="2"><button onclick="addItemToTable()">Add Item</button></td></tr>
             </table>
@@ -412,7 +412,7 @@
         
         <!-- Selected Items -->
         <div class="section-card">
-            <h2 class="section-title">🛒 Selected Items</h2>
+            <h2 class="section-title">Selected Items</h2>
             <table id="itemsTable">
                 <tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th><th>Action</th></tr>
             </table>
@@ -420,18 +420,18 @@
         
         <!-- Summary -->
         <div class="section-card summary-section">
-            <h2 class="section-title">💰 Summary</h2>
+            <h2 class="section-title">Payment</h2>
             <table>
                 <tr><td>Discount (%):</td><td><input type="number" id="discount" value="0" min="0" max="100" onchange="calculateTotal()"></td></tr>
-                <tr><td>Subtotal:</td><td><span id="subtotal">$0.00</span></td></tr>
-                <tr><td>Discount:</td><td><span id="discountAmount">$0.00</span></td></tr>
-                <tr><td><b>Total:</b></td><td><b><span id="total">$0.00</span></b></td></tr>
+                <tr><td>Subtotal:</td><td><span id="subtotal">Rs. 0.00</span></td></tr>
+                <tr><td>Discount:</td><td><span id="discountAmount">Rs. 0.00</span></td></tr>
+                <tr><td><b>Total:</b></td><td><b><span id="total">Rs. 0.00</span></b></td></tr>
             </table>
         </div>
         
         <!-- Actions -->
         <div class="section-card actions-section">
-            <h2 class="section-title">⚡ Actions</h2>
+            <h2 class="section-title">Actions</h2>
             <button id="saveBtn" onclick="saveBill()">Save Bill</button>
             <button id="printBtn" onclick="printBill()" disabled>Print Receipt</button>
             <button onclick="newBill()" id="new_bill">New Bill</button>

@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -245,6 +247,11 @@ public class BillController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String billId = request.getParameter("billId");
+		
+		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
+		String currentTime = LocalDateTime.now().format(timeFormatter);
+
+		
 
 		try {
 			Bill bill = billService.getBillById(billId);
@@ -294,6 +301,8 @@ public class BillController extends HttpServlet {
 			infoTable.addCell(new PdfPCell(new Phrase(bill.getBillId(), normalFont)));
 			infoTable.addCell(new PdfPCell(new Phrase("Date:", boldFont)));
 			infoTable.addCell(new PdfPCell(new Phrase(bill.getBillDate().toString(), normalFont)));
+			infoTable.addCell(new PdfPCell(new Phrase("Time:", boldFont)));
+			infoTable.addCell(new PdfPCell(new Phrase(currentTime, normalFont)));
 			infoTable.addCell(new PdfPCell(new Phrase("Customer:", boldFont)));
 			infoTable.addCell(new PdfPCell(new Phrase(customer.getName(), normalFont)));
 			infoTable.addCell(new PdfPCell(new Phrase("Account No:", boldFont)));
@@ -330,8 +339,8 @@ public class BillController extends HttpServlet {
 
 				itemsTable.addCell(new PdfPCell(new Phrase(itemName, normalFont)));
 				itemsTable.addCell(new PdfPCell(new Phrase(String.valueOf(item.getQuantity()), normalFont)));
-				itemsTable.addCell(new PdfPCell(new Phrase("$" + String.format("%.2f", unitPrice), normalFont)));
-				itemsTable.addCell(new PdfPCell(new Phrase("$" + String.format("%.2f", lineTotal), normalFont)));
+				itemsTable.addCell(new PdfPCell(new Phrase("Rs ." + String.format("%.2f", unitPrice), normalFont)));
+				itemsTable.addCell(new PdfPCell(new Phrase("Rs ." + String.format("%.2f", lineTotal), normalFont)));
 			}
 
 			document.add(itemsTable);
@@ -357,7 +366,7 @@ public class BillController extends HttpServlet {
 
 			// Footer
 			document.add(new Paragraph(" "));
-			Paragraph thanks = new Paragraph("Thank you for your business!", boldFont);
+			Paragraph thanks = new Paragraph("Thank you for your business! We look forward to serving you again.", boldFont);
 			thanks.setAlignment(Element.ALIGN_CENTER);
 			document.add(thanks);
 

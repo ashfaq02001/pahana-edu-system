@@ -51,7 +51,7 @@ if (!"admin".equals(currentUser.getRole().toLowerCase())) {
 				<span>Manage Items</span>
 			</a> <a href="CustomerController?action=viewCustomers" class="nav-link">
 				<span>👤</span> <span>Manage Customers</span>
-			</a> <a href="BillController?action=viewBills" class="nav-link"> <span>📊</span>
+			</a> <a href="BillController?action=viewBills" class="nav-link"> <span>📝</span>
 				<span>Manage Bills</span>
 			</a> <a href="LoginController?action=help" class="nav-link"> <span>❓</span>
 				<span>Help</span>
@@ -96,10 +96,6 @@ if (!"admin".equals(currentUser.getRole().toLowerCase())) {
 					<li>Click on "Manage Customers" from the navigation menu</li>
 					<li>Select the customer and click the "delete" button</li>
 				</ol>
-
-
-
-
 			</div>
 		</div>
 

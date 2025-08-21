@@ -87,9 +87,9 @@ public class LoginController extends HttpServlet {
 					}
 				}
 			}
-
-			request.getRequestDispatcher("index.jsp").forward(request, response);
 		}
+
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	private void authenticateUser(HttpServletRequest request, HttpServletResponse response)
@@ -118,6 +118,12 @@ public class LoginController extends HttpServlet {
 				createUserSession(request, user, remember);
 
 				// Create remember me cookie if requested
+				if (remember) {
+					Cookie rememberCookie = new Cookie("rememberedUser", user.getUsername());
+					rememberCookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+					rememberCookie.setPath("/");
+					response.addCookie(rememberCookie);
+				}
 
 				// Redirect based on role
 				redirectBasedOnRole(user, request, response);
@@ -202,8 +208,34 @@ public class LoginController extends HttpServlet {
 
 			System.out.println("Dashboard loaded successfully");
 			request.getRequestDispatcher("WEB-INF/View/admin-dashboard.jsp").forward(request, response);
+			
 		} else if ("user".equals(role)) {
+			System.out.println("Loading Billing Dashboard");
+			
+			// Load data needed for billing dashboard
+			try {
+				// Load customer list for customer selection dropdown
+				CustomerService customerService = CustomerService.getInstance();
+				request.setAttribute("customers", customerService.ViewAccountDetails());
+				System.out.println("Loaded customers for billing dashboard");
+			} catch (Exception e) {
+				System.out.println("Error loading customers: " + e.getMessage());
+				request.setAttribute("customers", new java.util.ArrayList<>());
+			}
+
+			try {
+				// Load item list for item selection dropdown
+				ItemService itemService = ItemService.getInstance();
+				request.setAttribute("items", itemService.ViewItems());
+				System.out.println("Loaded items for billing dashboard");
+			} catch (Exception e) {
+				System.out.println("Error loading items: " + e.getMessage());
+				request.setAttribute("items", new java.util.ArrayList<>());
+			}
+
+			System.out.println("Billing dashboard loaded successfully");
 			request.getRequestDispatcher("WEB-INF/View/BillingDashboard.jsp").forward(request, response);
+			
 		} else {
 			response.sendRedirect("LoginController?action=login&error=unknown_role");
 		}
@@ -237,7 +269,7 @@ public class LoginController extends HttpServlet {
 			session.invalidate();
 		}
 
-		// Remember me cookie
+		// Clear remember me cookie
 		Cookie rememberCookie = new Cookie("rememberedUser", "");
 		rememberCookie.setMaxAge(0);
 		rememberCookie.setPath("/");
@@ -245,12 +277,10 @@ public class LoginController extends HttpServlet {
 
 		// Redirect to login
 		response.sendRedirect("LoginController?action=login&message=logged_out");
-		
 	}
 
 	private void showHelpPage(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		request.getRequestDispatcher("WEB-INF/View/admin-help.jsp").forward(request, response);
 	}
 }
