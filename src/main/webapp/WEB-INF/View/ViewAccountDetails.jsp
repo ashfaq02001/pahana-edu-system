@@ -60,7 +60,7 @@ if (successMsg != null) {
         </a>
         <a href="BillController?action=dashboard" class="nav-link">
             <span>📄</span>
-            <span>Create Invoice</span>
+            <span>Create Bill</span>
         </a>
         <a href="ItemController?action=viewItems" class="nav-link">
             <span>📚</span>

@@ -79,12 +79,6 @@ public class BillController extends HttpServlet {
 			List<Customer> customers = customerService.ViewAccountDetails();
 			List<Item> items = itemService.ViewItems();
 
-			// Debug: Print all customer account numbers
-			System.out.println("=== Available Customers ===");
-			for (Customer customer : customers) {
-				System.out.println("Account: '" + customer.getAccountNumber() + "' - Name: " + customer.getName());
-			}
-
 			request.setAttribute("customers", customers);
 			request.setAttribute("items", items);
 			request.getRequestDispatcher("WEB-INF/View/BillingDashboard.jsp").forward(request, response);
@@ -286,7 +280,7 @@ public class BillController extends HttpServlet {
 			document.add(new Paragraph(" "));
 
 			// Receipt Title
-			Paragraph receiptTitle = new Paragraph("SALES INVOICE", boldFont);
+			Paragraph receiptTitle = new Paragraph("SALES Bill", boldFont);
 			receiptTitle.setAlignment(Element.ALIGN_CENTER);
 			document.add(receiptTitle);
 
@@ -349,15 +343,15 @@ public class BillController extends HttpServlet {
 			summaryTable.setHorizontalAlignment(Element.ALIGN_RIGHT);
 
 			summaryTable.addCell(new PdfPCell(new Phrase("Subtotal:", boldFont)));
-			summaryTable.addCell(new PdfPCell(new Phrase("$" + String.format("%.2f", subTotal), normalFont)));
+			summaryTable.addCell(new PdfPCell(new Phrase("Rs. " + String.format("%.2f", subTotal), normalFont)));
 
 			double discountAmount = (subTotal * bill.getDiscount()) / 100;
 			summaryTable.addCell(new PdfPCell(new Phrase("Discount (" + bill.getDiscount() + "%):", boldFont)));
-			summaryTable.addCell(new PdfPCell(new Phrase("-$" + String.format("%.2f", discountAmount), normalFont)));
+			summaryTable.addCell(new PdfPCell(new Phrase("Rs. " + String.format("%.2f", discountAmount), normalFont)));
 
 			summaryTable.addCell(new PdfPCell(new Phrase("TOTAL:", boldFont)));
 			summaryTable
-					.addCell(new PdfPCell(new Phrase("$" + String.format("%.2f", bill.getTotalAmount()), boldFont)));
+					.addCell(new PdfPCell(new Phrase("Rs. " + String.format("%.2f", bill.getTotalAmount()), boldFont)));
 
 			document.add(summaryTable);
 

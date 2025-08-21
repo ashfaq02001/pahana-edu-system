@@ -24,7 +24,6 @@ public class LoginController extends HttpServlet {
 
 	public void init() throws ServletException {
 		userService = UserService.getInstance();
-		System.out.println("✅ LoginController initialized successfully");
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -99,13 +98,13 @@ public class LoginController extends HttpServlet {
 		String password = request.getParameter("password");
 		String rememberMe = request.getParameter("rememberMe");
 
-		System.out.println("🔑 Login attempt for user: " + username);
+		System.out.println("Login attempt for user: " + username);
 
 		try {
 			User user = userService.authenticateUser(username, password);
 
 			if (user != null) {
-				System.out.println("✅ Login successful - User: " + user.getUsername() + ", Role: " + user.getRole());
+				System.out.println("Login successful - User: " + user.getUsername() + ", Role: " + user.getRole());
 
 				// Update last login
 				try {
@@ -124,13 +123,13 @@ public class LoginController extends HttpServlet {
 				redirectBasedOnRole(user, request, response);
 
 			} else {
-				System.out.println("❌ Login failed - Invalid credentials for: " + username);
+				System.out.println("Login failed - Invalid credentials for: " + username);
 				request.setAttribute("errorMessage", "Invalid username or password");
 				request.getRequestDispatcher("index.jsp").forward(request, response);
 			}
 
 		} catch (SQLException e) {
-			System.out.println("💥 Database error: " + e.getMessage());
+			System.out.println("Database error: " + e.getMessage());
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "Database error. Please try again.");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
@@ -147,7 +146,7 @@ public class LoginController extends HttpServlet {
 		// Set session timeout (30 minutes)
 		session.setMaxInactiveInterval(30 * 60);
 
-		System.out.println("📱 Session created for user: " + user.getUsername());
+		System.out.println("Session created for user: " + user.getUsername());
 	}
 
 	private void redirectBasedOnRole(User user, HttpServletRequest request, HttpServletResponse response)
@@ -155,7 +154,7 @@ public class LoginController extends HttpServlet {
 		String role = user.getRole().toLowerCase();
 
 		if ("admin".equals(role)) {
-			System.out.println("👑 Loading Admin Dashboard");
+			System.out.println("Loading Admin Dashboard");
 
 			// Initialize counts with default values
 			int customerCount = 0;
@@ -201,7 +200,7 @@ public class LoginController extends HttpServlet {
 			request.setAttribute("userCount", userCount);
 			request.setAttribute("itemCount", itemCount);
 
-			System.out.println("✅ Dashboard loaded successfully");
+			System.out.println("Dashboard loaded successfully");
 			request.getRequestDispatcher("WEB-INF/View/admin-dashboard.jsp").forward(request, response);
 		} else if ("user".equals(role)) {
 			request.getRequestDispatcher("WEB-INF/View/BillingDashboard.jsp").forward(request, response);
@@ -234,11 +233,11 @@ public class LoginController extends HttpServlet {
 		// Invalidate session
 		HttpSession session = request.getSession(false);
 		if (session != null) {
-			System.out.println("🚪 Logging out user: " + session.getAttribute("username"));
+			System.out.println("Logging out user: " + session.getAttribute("username"));
 			session.invalidate();
 		}
 
-		// Remove remember me cookie
+		// Remember me cookie
 		Cookie rememberCookie = new Cookie("rememberedUser", "");
 		rememberCookie.setMaxAge(0);
 		rememberCookie.setPath("/");

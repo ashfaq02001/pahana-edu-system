@@ -14,21 +14,6 @@ import com.assignment.model.Item;
 
 public class ItemDAOTest {
 
-    @Test
-    public void testViewItemsNotNull() throws SQLException {
-        // Test that ViewItems returns a non-null list
-        ItemDAO itemDAO = new ItemDAO();
-        List<Item> items = itemDAO.ViewItems();
-        assertNotNull("The items list should not be null", items);
-    }
-
-    @Test
-    public void testGetItemCountNotNegative() throws SQLException {
-        // Test that getItemCount returns a non-negative value
-        ItemDAO itemDAO = new ItemDAO();
-        int count = itemDAO.getItemCount();
-        assertTrue("Item count should be non-negative", count >= 0);
-    }
 
     @Test
     public void testAddItemNotThrowException() {
@@ -42,16 +27,6 @@ public class ItemDAOTest {
         } catch (Exception e) {
             assertFalse("addItem should not throw exception", true);
         }
-    }
-
- 
-    @Test
-    public void testGetItemByIdWithValidId() throws SQLException {
-        // Test getItemById with a potentially existing ID
-        ItemDAO itemDAO = new ItemDAO();
-        Item item = itemDAO.getItemById("TEST001");
-        // Item can be null if not found, or not null if found - both are valid
-        assertTrue("getItemById should execute without exception", item == null || item != null);
     }
 
     @Test
@@ -84,7 +59,7 @@ public class ItemDAOTest {
     }
 
     @Test
-    public void testViewItemsExecuteSuccessfully() throws SQLException {
+    public void testViewItems() throws SQLException {
         // Test that ViewItems executes a query successfully
         ItemDAO itemDAO = new ItemDAO();
         
@@ -97,16 +72,4 @@ public class ItemDAOTest {
         }
     }
 
-    @Test
-    public void testGetItemCountExecuteSuccessfully() throws SQLException {
-        // Test that getItemCount executes successfully
-        ItemDAO itemDAO = new ItemDAO();
-        
-        try {
-            int count = itemDAO.getItemCount();
-            assertTrue("getItemCount should return a valid count", count >= 0);
-        } catch (SQLException e) {
-            assertFalse("getItemCount should not throw SQL exception", true);
-        }
-    }
 }

@@ -46,7 +46,7 @@ if (!"admin".equals(currentUser.getRole().toLowerCase())) {
 			<a href="LoginController?action=admin" class="nav-link"> <span>🏠</span>
 				<span>Home</span>
 			</a> <a href="BillController?action=dashboard" class="nav-link"> <span>📄</span>
-				<span>Create Invoice</span>
+				<span>Create Bill</span>
 			</a> <a href="ItemController?action=viewItems" class="nav-link"> <span>📚</span>
 				<span>Manage Items</span>
 			</a> <a href="CustomerController?action=viewCustomers" class="nav-link">
