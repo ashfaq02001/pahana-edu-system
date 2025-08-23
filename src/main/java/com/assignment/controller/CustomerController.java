@@ -27,14 +27,12 @@ public class CustomerController extends HttpServlet {
 	public void init() throws ServletException {
 		customerService = CustomerService.getInstance();
 	}
-	
-	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String action = request.getParameter("action");
-		
+
 		if (action == null || action.equals("list")) {
 			viewAccountDetails(request, response);
 		} else if (action.equals("addCustomer")) {
@@ -45,7 +43,7 @@ public class CustomerController extends HttpServlet {
 			deleteCustomer(request, response);
 		} else {
 			response.sendRedirect("CustomerController?action=list");
-		}		
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -65,7 +63,7 @@ public class CustomerController extends HttpServlet {
 		String address = request.getParameter("address");
 		String telephone = request.getParameter("telephone");
 		String email = request.getParameter("email");
-//		
+
 		// Create current timestamp for registration date
 		Timestamp registration_date = new Timestamp(System.currentTimeMillis());
 
@@ -76,13 +74,11 @@ public class CustomerController extends HttpServlet {
 		customer.setTelephone(telephone); // Fixed: was setPhone(phone)
 		customer.setEmail(email); // Added missing email
 		customer.setRegistrationDate(registration_date); // Added missing registration date
-//
+
 		customerService.addCustomer(customer);
 		request.getSession().setAttribute("successMessage", "Customer added successfully!");
 		response.sendRedirect("CustomerController?action=list"); // Redirect to list instead of AddCustomer.jsp
 	}
-	
-	
 
 	private void viewAccountDetails(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -91,11 +87,11 @@ public class CustomerController extends HttpServlet {
 			AccountList = customerService.ViewAccountDetails();
 			request.setAttribute("account_list", AccountList);
 		} catch (SQLException e) {
-			e.printStackTrace(); // Added error handling
+			e.printStackTrace();
 		}
 		request.getRequestDispatcher("WEB-INF/View/ViewAccountDetails.jsp").forward(request, response);
 	}
-	
+
 	private void updateCustomer(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String account_no = request.getParameter("account_no");
@@ -114,14 +110,14 @@ public class CustomerController extends HttpServlet {
 		customerService.updateCustomer(customer);
 		response.sendRedirect("CustomerController?action=list");
 	}
-	
+
 	private void deleteCustomer(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String accountNumber = request.getParameter("id");
 		customerService.deleteCustomer(accountNumber);
 		response.sendRedirect("CustomerController?action=list");
 	}
-	
+
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String accountNumber = request.getParameter("id");
@@ -135,5 +131,3 @@ public class CustomerController extends HttpServlet {
 		}
 	}
 }
-
-

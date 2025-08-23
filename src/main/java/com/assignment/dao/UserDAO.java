@@ -17,7 +17,7 @@ public class UserDAO {
 	         PreparedStatement pstmt = conn.prepareStatement(query)) {
 	        
 	        pstmt.setString(1, username);
-	        pstmt.setString(2, password); // In production, use hashed passwords
+	        pstmt.setString(2, password); 
 	        
 	        try (ResultSet rs = pstmt.executeQuery()) {
 	            if (rs.next()) {

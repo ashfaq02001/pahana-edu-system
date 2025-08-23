@@ -98,13 +98,10 @@ public class LoginController extends HttpServlet {
 		String password = request.getParameter("password");
 		String rememberMe = request.getParameter("rememberMe");
 
-		System.out.println("Login attempt for user: " + username);
-
 		try {
 			User user = userService.authenticateUser(username, password);
 
 			if (user != null) {
-				System.out.println("Login successful - User: " + user.getUsername() + ", Role: " + user.getRole());
 
 				// Update last login
 				try {
@@ -171,7 +168,6 @@ public class LoginController extends HttpServlet {
 			try {
 				CustomerService customerService = CustomerService.getInstance();
 				customerCount = customerService.getCustomerCount();
-				System.out.println("Retrieved customer count: " + customerCount);
 			} catch (Exception e) {
 				System.out.println("Error getting customer count: " + e.getMessage());
 			}
@@ -179,7 +175,6 @@ public class LoginController extends HttpServlet {
 			try {
 				BillService billService = BillService.getInstance();
 				billCount = billService.getBillCount();
-				System.out.println("Retrieved bill count: " + billCount);
 			} catch (Exception e) {
 				System.out.println("Error getting bill count: " + e.getMessage());
 			}
@@ -187,7 +182,6 @@ public class LoginController extends HttpServlet {
 			try {
 				UserService userService = UserService.getInstance();
 				userCount = userService.getUserCount();
-				System.out.println("Retrieved user count: " + userCount);
 			} catch (Exception e) {
 				System.out.println("Error getting user count: " + e.getMessage());
 			}
@@ -195,7 +189,6 @@ public class LoginController extends HttpServlet {
 			try {
 				ItemService itemService = ItemService.getInstance();
 				itemCount = itemService.getItemCount();
-				System.out.println("Retrieved item count: " + itemCount);
 			} catch (Exception e) {
 				System.out.println("Error getting item count: " + e.getMessage());
 			}
@@ -208,10 +201,10 @@ public class LoginController extends HttpServlet {
 
 			System.out.println("Dashboard loaded successfully");
 			request.getRequestDispatcher("WEB-INF/View/admin-dashboard.jsp").forward(request, response);
-			
+
 		} else if ("user".equals(role)) {
 			System.out.println("Loading Billing Dashboard");
-			
+
 			// Load data needed for billing dashboard
 			try {
 				// Load customer list for customer selection dropdown
@@ -235,7 +228,7 @@ public class LoginController extends HttpServlet {
 
 			System.out.println("Billing dashboard loaded successfully");
 			request.getRequestDispatcher("WEB-INF/View/BillingDashboard.jsp").forward(request, response);
-			
+
 		} else {
 			response.sendRedirect("LoginController?action=login&error=unknown_role");
 		}

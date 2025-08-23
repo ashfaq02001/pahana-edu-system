@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import com.assignment.model.Bill;
 import com.assignment.model.BillItem;
 import com.assignment.model.Customer;
@@ -50,21 +49,20 @@ public class BillController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-    	String action = request.getParameter("action");
-        if (action == null || action.equals("dashboard")) {
-            showBillingDashboard(request, response);
-        } else if (action.equals("printReceipt")) {
-            printReceipt(request, response);    
-        } else if (action.equals("viewBills")) {
-        	viewBills(request, response);
-        } else if (action.equals("deleteBill")) {
-        	deleteBill(request, response);
-        }
-        else {
-            response.sendRedirect("BillController?action=dashboard");
-        }
-    }
+			throws ServletException, IOException {
+		String action = request.getParameter("action");
+		if (action == null || action.equals("dashboard")) {
+			showBillingDashboard(request, response);
+		} else if (action.equals("printReceipt")) {
+			printReceipt(request, response);
+		} else if (action.equals("viewBills")) {
+			viewBills(request, response);
+		} else if (action.equals("deleteBill")) {
+			deleteBill(request, response);
+		} else {
+			response.sendRedirect("BillController?action=dashboard");
+		}
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -73,7 +71,6 @@ public class BillController extends HttpServlet {
 			generateBill(request, response);
 		}
 	}
-	
 
 	private void showBillingDashboard(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -89,22 +86,21 @@ public class BillController extends HttpServlet {
 			response.sendRedirect("error.jsp");
 		}
 	}
-	
-	
+
 	private void viewBills(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
-	    try {
-	        List<Bill> bills = billService.getAllBills(); // You need to add this to service
-	        List<Customer> customers = customerService.ViewAccountDetails();
-	        
-	        request.setAttribute("bills", bills);
-	        request.setAttribute("customers", customers);
-	        request.getRequestDispatcher("WEB-INF/View/ViewBills.jsp").forward(request, response);
-	        
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        response.sendRedirect("BillController?action=dashboard&error=true");
-	    }
+			throws ServletException, IOException {
+		try {
+			List<Bill> bills = billService.getAllBills();
+			List<Customer> customers = customerService.ViewAccountDetails();
+
+			request.setAttribute("bills", bills);
+			request.setAttribute("customers", customers);
+			request.getRequestDispatcher("WEB-INF/View/ViewBills.jsp").forward(request, response);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			response.sendRedirect("BillController?action=dashboard&error=true");
+		}
 	}
 
 	private void generateBill(HttpServletRequest request, HttpServletResponse response)
@@ -113,11 +109,6 @@ public class BillController extends HttpServlet {
 		String[] itemIds = request.getParameterValues("itemId");
 		String[] quantities = request.getParameterValues("quantity");
 		String discountStr = request.getParameter("discount");
-
-		System.out.println("=== Generate Bill Debug ===");
-		System.out.println("Account No from form: '" + accountNo + "'");
-		System.out.println("Account No length: " + (accountNo != null ? accountNo.length() : "null"));
-		System.out.println("Discount: " + discountStr);
 
 		// Check if customer exists
 		try {
@@ -133,16 +124,6 @@ public class BillController extends HttpServlet {
 			System.out.println("Error checking customer: " + e.getMessage());
 			response.sendRedirect("BillController?action=dashboard&error=customer_check_failed");
 			return;
-		}
-
-		if (itemIds != null) {
-			System.out.println("Number of items: " + itemIds.length);
-			for (int i = 0; i < itemIds.length; i++) {
-				System.out.println("Item " + i + ": ID=" + itemIds[i] + ", Qty="
-						+ (quantities != null && i < quantities.length ? quantities[i] : "null"));
-			}
-		} else {
-			System.out.println("No items received");
 		}
 
 		// Generate Bill ID
@@ -165,8 +146,6 @@ public class BillController extends HttpServlet {
 						String itemId = itemIds[i];
 						int quantity = Integer.parseInt(quantities[i]);
 
-						System.out.println("Processing item: " + itemId + " with quantity: " + quantity);
-
 						// Find item price
 						double unitPrice = 0;
 						for (Item item : allItems) {
@@ -176,8 +155,6 @@ public class BillController extends HttpServlet {
 							}
 						}
 
-						System.out.println("Unit price found: " + unitPrice);
-
 						double totalPrice = quantity * unitPrice;
 						subTotal += totalPrice;
 
@@ -186,8 +163,6 @@ public class BillController extends HttpServlet {
 						billItem.setBillId(billId);
 						billItem.setItemId(itemId);
 						billItem.setQuantity(quantity);
-
-						System.out.println("Adding bill item: " + billId + ", " + itemId + ", " + quantity);
 						billService.addBillItem(billItem);
 
 						// Update stock
@@ -211,7 +186,6 @@ public class BillController extends HttpServlet {
 			bill.setDiscount(discount);
 			bill.setTotalAmount(totalAmount);
 
-			System.out.println("Saving bill with account number: '" + accountNo + "'");
 			billService.addBill(bill);
 
 			// Store bill data in session to preserve form
@@ -229,29 +203,27 @@ public class BillController extends HttpServlet {
 			response.sendRedirect("BillController?action=dashboard&error=true");
 		}
 	}
-	
+
 	private void deleteBill(HttpServletRequest request, HttpServletResponse response)
-	        throws ServletException, IOException {
-		
-	    String billId = request.getParameter("billId");
-	    try {
-	        billService.deleteBill(billId);
-	        response.sendRedirect("BillController?action=viewBills&success=deleted");
-	    } catch (SQLException e) {
-	        e.printStackTrace();
-	        response.sendRedirect("BillController?action=viewBills&error=delete_failed");
-	    }
+			throws ServletException, IOException {
+
+		String billId = request.getParameter("billId");
+		try {
+			billService.deleteBill(billId);
+			response.sendRedirect("BillController?action=viewBills&success=deleted");
+		} catch (SQLException e) {
+			e.printStackTrace();
+			response.sendRedirect("BillController?action=viewBills&error=delete_failed");
+		}
 	}
 
 	private void printReceipt(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String billId = request.getParameter("billId");
-		
+
 		DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm a");
 		String currentTime = LocalDateTime.now().format(timeFormatter);
-
-		
 
 		try {
 			Bill bill = billService.getBillById(billId);
@@ -366,7 +338,8 @@ public class BillController extends HttpServlet {
 
 			// Footer
 			document.add(new Paragraph(" "));
-			Paragraph thanks = new Paragraph("Thank you for your business! We look forward to serving you again.", boldFont);
+			Paragraph thanks = new Paragraph("Thank you for your business! We look forward to serving you again.",
+					boldFont);
 			thanks.setAlignment(Element.ALIGN_CENTER);
 			document.add(thanks);
 

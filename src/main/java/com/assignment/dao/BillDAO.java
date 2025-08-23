@@ -14,21 +14,12 @@ import com.assignment.model.BillItem;
 public class BillDAO {
 
 	public void addBill(Bill bill) {
-		
+
 		String query = "INSERT INTO bills (bill_id, account_number, bill_date, discount, total_amount) VALUES (?, ?, ?, ?, ?)";
 
 		try (Connection conn = DBConnectionFactory.getConnection();
 				PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-			System.out.println("=== Adding Bill Debug ===");
-			System.out.println("Bill ID: " + bill.getBillId());
-			System.out.println("Account Number: '" + bill.getAccountNo() + "'");
-			System.out.println("Bill Date: " + bill.getBillDate());
-			System.out.println("Discount: " + bill.getDiscount());
-			System.out.println("Total Amount: " + bill.getTotalAmount());
-			System.out.println("Query: " + query);
-
-			// Customer exists, proceed with bill insertion
 			pstmt.setString(1, bill.getBillId());
 			pstmt.setString(2, bill.getAccountNo());
 			pstmt.setDate(3, bill.getBillDate());
@@ -39,10 +30,6 @@ public class BillDAO {
 			System.out.println("Bill inserted successfully. Rows affected: " + rowsAffected);
 
 		} catch (SQLException e) {
-			System.out.println("=== SQL Error in addBill ===");
-			System.out.println("Error Code: " + e.getErrorCode());
-			System.out.println("SQL State: " + e.getSQLState());
-			System.out.println("Error Message: " + e.getMessage());
 			e.printStackTrace();
 			throw new RuntimeException("Failed to insert bill: " + e.getMessage());
 		}

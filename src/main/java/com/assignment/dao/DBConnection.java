@@ -29,7 +29,7 @@ public class DBConnection {
 	        return instance;
 	    }
 
-	    // Create a new connection each time
+	    // Returns a new connection
 	    public Connection getConnection() throws SQLException {
 	        return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 	    }
